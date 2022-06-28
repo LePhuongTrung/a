@@ -32,10 +32,14 @@ const getOneBook = async (id) => {
         console.log(error);
     }
 };
-const createBook = async (req, res) => {
-    const book = await BookRepository.CreateBook(req);
-    console.log("🚀 ~ file: BookService.js ~ line 37 ~ createBook ~ book", book)  
-    return book;
+const createBook = async (data) => {
+    try {
+        const book = await BookRepository.CreateBook(data);
+        return book;
+    }
+    catch(error) {
+        console.log("🚀 ~ file: BookService.js ~ line 38 ~ createBook ~ error", error)
+    }
 };
 const updateBook = async (id, book) => {
     try {

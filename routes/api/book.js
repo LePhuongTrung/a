@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const BookService = require('../../service/BookService');
 const BookController = require('../../controllers/bookController')
 /**
  * @swagger
@@ -76,7 +77,7 @@ router.get('/books', BookController.getAllBooks );
  *                       type: number
  *                       description: The book's price.
  */
-router.get('/books/skip/:skip', BookController.Get1PageBook);
+router.get('/books/skip/:skip', BookController.get1PageBook);
 
 /**
  * @swagger
@@ -116,23 +117,9 @@ router.get('/books/skip/:skip', BookController.Get1PageBook);
 router.get('/oneBook/:id', BookController.getBook);
 
 /* POST create book. */
-router.post('/CreateBooks', async (req, res) => {
-    // const book = new bookmodel.book({
-    //     name: req.body.name,
-    //     category: req.body.category,
-    //     author: req.body.author,
-    //     description: req.body.description,
-    //     imageUrl: req.body.imageUrl,
-    //     price: req.body.price,
-    // })
-    const newBook = await BookService.createBook(book);
-    res.send(newBook);
-});
+router.post('/CreateBooks', BookController.createBook);
 /* PUT update book. */
-router.put('/updateBooks/:id', async (req, res) => {
-    const book = await BookService.updateBook(req.params.id, req.body);
-    res.send(book);
-});
+router.put('/updateBooks/:id',BookController.updateBook);
 
 /**
  * @swagger
@@ -152,20 +139,11 @@ router.put('/updateBooks/:id', async (req, res) => {
  *       200:
  *         description: User that was deleted
  */
-router.delete('/deleteBooks/:id', async (req, res) => {
-    const book = await BookService.deleteBook(req.params.id);
-    res.send(book);
-}); 
+router.delete('/deleteBooks/:id', BookController.deletedBook); 
+
+router.get('/deleteBook/:id', BookController.deletedBook); 
 /* Search book. */
-router.get('/searchBook/:searchString/:skip', async (req, res) => {
-    const searchString = req.params.searchString;
-    const skip = req.params.skip;
-    if (skip == null) {
-        skip = 0;
-    }
-    const book = await BookService.searchBook(searchString, skip);
-    res.send(book);
-});
+router.get('/searchBook/:searchString/:skip', BookController.searchBook);
 
 
 module.exports = router;

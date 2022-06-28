@@ -42,9 +42,9 @@ const CreateBook = async (data) =>{
         console.log("🚀 ~ file: BookRepository.js ~ line 42 ~ CreateBook ~ error", error)
     }
 }
-const UpdateBook = async (id, book) =>{
+const UpdateBook = async (id, data) =>{
     try{
-        const updatedBook = await Bookmodel.findByIdAndUpdate(id, book, {new: true});
+        const updatedBook = await Bookmodel.findByIdAndUpdate(id, data);
         return updatedBook;
     } catch(error){
         console.log(error);
