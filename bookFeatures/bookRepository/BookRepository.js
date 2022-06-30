@@ -1,8 +1,8 @@
-const Bookmodel = require('../Database/models/Book');
+const BookModel = require('../../Database/models/Book');
 var numProductOfEachPage = 3;
 const FindAllBooks = async () =>{
     try{
-        const books = await Bookmodel.find();
+        const books = await BookModel.find();
         return books;
     } catch(error){
         console.log(error);
@@ -11,7 +11,7 @@ const FindAllBooks = async () =>{
 //search books by title
 const SearchBook = async (searchString, skip) =>{
     try{
-        const books = await Bookmodel.find({title: searchString}).skip(skip * numProductOfEachPage).limit(numProductOfEachPage);
+        const books = await BookModel.find({title: searchString}).skip(skip * numProductOfEachPage).limit(numProductOfEachPage);
         return books;
     } catch(error){
         console.log(error);
@@ -20,7 +20,7 @@ const SearchBook = async (searchString, skip) =>{
 //find and display list limit number book
 const FindAllBooksSkip = async (skip) =>{
     try{
-        const books = await Bookmodel.find().skip(skip * numProductOfEachPage).limit(numProductOfEachPage);
+        const books = await BookModel.find().skip(skip * numProductOfEachPage).limit(numProductOfEachPage);
         return books;
     } catch(error){
         console.log(error);
@@ -28,7 +28,7 @@ const FindAllBooksSkip = async (skip) =>{
 };
 const FindOneBook = async (id) =>{
     try{
-        const book = await Bookmodel.findById(id);
+        const book = await BookModel.findById(id);
         return book;
     } catch(error){
         console.log(error);
@@ -36,7 +36,7 @@ const FindOneBook = async (id) =>{
 };
 const CreateBook = async (data) =>{
     try{
-        const book = await Bookmodel.create(data)
+        const book = await BookModel.create(data)
         return book;
     } catch(error){
         console.log("🚀 ~ file: BookRepository.js ~ line 42 ~ CreateBook ~ error", error)
@@ -44,7 +44,7 @@ const CreateBook = async (data) =>{
 }
 const UpdateBook = async (id, data) =>{
     try{
-        const updatedBook = await Bookmodel.findByIdAndUpdate(id, data);
+        const updatedBook = await BookModel.findByIdAndUpdate(id, data);
         return updatedBook;
     } catch(error){
         console.log(error);
@@ -52,13 +52,12 @@ const UpdateBook = async (id, data) =>{
 }
 const DeleteBook = async (id) =>{
     try{
-        const deletedBook = await Bookmodel.findByIdAndDelete(id);
+        const deletedBook = await BookModel.findByIdAndDelete(id);
         return deletedBook;
     } catch(error){
         console.log(error);
     }
 }
-const sum = (a, b) => a + b;
 module.exports = {
     FindAllBooks,
     FindAllBooksSkip,
@@ -67,5 +66,4 @@ module.exports = {
     UpdateBook,
     DeleteBook,
     SearchBook,
-    sum,
 };

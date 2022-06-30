@@ -1,22 +1,35 @@
-const BookService = require('../service/BookService');
+const BookService = require('../bookService/BookService');
 
 const getAllBooks = async (req, res) => {
-    const book = await BookService.getAllBooks();
-    res.send(book);
+    try{
+        const book = await BookService.getAllBooks();
+        if(!book) res.Status(400).send('No books in stock yet');
+        res.send(book);
+    }catch (error){
+        console.log("🚀 ~ file: bookController.js ~ line 8 ~ getAllBooks ~ error", error)    ;
+    }
 }
 
 const getBook = async (req, res) => {
-    const book = await BookService.getOneBook(req.params.id);
-    if (!book) res.sendStatus(400);
-    res.send(book);
+    try{
+        const book = await BookService.getOneBook(req.params.id);
+        if (!book) res.sendStatus(400);
+        res.send(book);
+    }catch (error){
+        console.log("🚀 ~ file: bookController.js ~ line 19 ~ getBook ~ error", error)        
+    }
 }
 
 const get1PageBook = async (req, res) => {
-    let skip = "0";
-    console.log("🚀 ~ file: Book.js ~ line 13 ~ router.get ~ skip", skip);
-    skip = req.params.skip;
-    const book = await BookService.getAllBooksSkip(skip);
-    res.send(book);
+    try{
+        let skip = "0";
+        console.log("🚀 ~ file: Book.js ~ line 13 ~ router.get ~ skip", skip);
+        skip = req.params.skip;
+        const book = await BookService.getAllBooksSkip(skip);
+        res.send(book);
+    }catch (error){
+        console.log("🚀 ~ file: bookController.js ~ line 31 ~ get1PageBook ~ error", error)        
+    }
 }
 
 const createBook = async (req, res) => {
@@ -60,6 +73,11 @@ const updateBook = async (req, res) => {
 }
 
 const searchBook = async (req, res) => {
+    try{
+
+    }catch (error){
+        
+    }
     const searchString = req.params.searchString;
     const skip = req.params.skip;
     if (skip == null) {

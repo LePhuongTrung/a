@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const BookService = require('../../service/BookService');
-const BookController = require('../../controllers/bookController')
+const BookController = require('../bookControllers/bookController')
 /**
  * @swagger
  * tags:

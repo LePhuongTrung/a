@@ -1,5 +1,5 @@
 const BookRepository = require('./BookRepository');
-const DB = require('../Database/connect');
+const DB = require('../../Database/connect');
 
 beforeEach( async () =>{
     await DB.connectDatabase();
@@ -43,7 +43,7 @@ describe('Sunny case: Book testings',() =>{
     // })
 
     it('Update book OK',async () =>{
-        const book = await BookRepository.CreateBook("62bb098189cd3d9c8905b024", {mockBook})
+        const book = await BookRepository.CreateBook("62bb098189cd3d9c8905b024", mockBook)
         expect(book.title).toBe(mockBook.title);
     })
     // chưa chuẩn
