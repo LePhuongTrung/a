@@ -1,17 +1,17 @@
 const { hashPassword, checkPassword } = require("../../../utils/bcrypt");
 const { createToken } = require("../../../utils/jwt");
-const User = require("../../../Database/models/User");
+const AuthService = require("../services/AuthServices")
 
 const register = async (req, res, next) => {
   try {
     let data = req.body;
-    const user = await User.findOne({ email: data.email });
-
-    if (user) return res.status(400).send("user already exist");
+    const foundUser = await AuthService.findOne(data.email);
+    if (foundUser) return res.status(400).send("user already exist");
+    if (!data.email || !data.password || !data.fullname) return res.status(412).send("Please fill in all required information")
 
     const hashedPassword = await hashPassword(data.password);
 
-    const newUser = await User.create({ ...data, password: hashedPassword });
+    const newUser = await AuthService.create({ ...data, password: hashedPassword });
 
     if (!newUser) return res.status(500).send("Internal server error");
 
@@ -29,7 +29,7 @@ const login = async (req, res, next) => {
     if (!email || !password)
       return res.status(400).send("empty email or password");
 
-    const foundUser = await User.findOne({ email });
+    const foundUser = await AuthService.findOne(email);
 
     if (!foundUser) return res.status(403).send("Can't find any user");
 
@@ -45,6 +45,8 @@ const login = async (req, res, next) => {
 
     res.cookie("access_token", token, {
       httpOnly: true,
+      secure: true,
+      maxAge: 300000,
     });
 
     return res.status(200).send("Login successfully !!!");

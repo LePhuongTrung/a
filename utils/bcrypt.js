@@ -3,8 +3,9 @@ const bcrypt = require("bcrypt");
 
 const hashPassword = async (plainPassword) => {
   try {
-    const hashed = await bcrypt.hash(plainPassword, process.env.SALT);
-    return hashed;
+    const salt = await bcrypt.genSalt(process.env.SALT_ROUNDS);
+    const hashPassword = await bcrypt.hashSync(plainPassword, salt);
+    return hashPassword;
   } catch (error) {
     console.log("🚀 ~ file: bcrypt.js ~ line 9 ~ hashPassword ~ error", error);
     return error;

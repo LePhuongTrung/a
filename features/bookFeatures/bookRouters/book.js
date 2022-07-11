@@ -116,6 +116,41 @@ router.get('/books/skip/:skip', bookController.get1PageBook);
 router.get('/oneBook/:id', bookController.getBook);
 
 /* POST create book. */
+/**
+ * @swagger
+ * /CreateBooks:
+ *   get:
+ *     summary: Create a new book.
+ *     tags: [Books]
+ *     description: create new book.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Numeric ID of the user to retrieve.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: A single user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                      id:
+ *                       type: string
+ *                       description: The book's unique ID.
+ *                      name:
+ *                       type: string
+ *                       description: The book's name.
+ *                      price:
+ *                       type: number
+ *                       description: The book's price.
+ */
 router.post('/CreateBooks', bookController.createBook);
 /* PUT update book. */
 router.put('/updateBooks/:id',bookController.updateBook);

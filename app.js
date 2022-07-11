@@ -4,7 +4,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const database = require('./Database/connect');
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var bookRouter = require('./features/bookFeatures/bookRouters/book');
 var authRouter = require('./features/userFeatures/routers/auth');
 const swaggerJSDoc = require('swagger-jsdoc');
@@ -52,9 +51,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', authRouter);
 app.use('/bookapi', bookRouter);
-app.use('/author', authRouter);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //IIFE
