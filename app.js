@@ -5,7 +5,8 @@ var logger = require('morgan');
 const database = require('./Database/connect');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var bookRouter = require('./bookFeatures/bookRouters/book');
+var bookRouter = require('./features/bookFeatures/bookRouters/book');
+var authRouter = require('./features/userFeatures/routers/auth');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 
@@ -38,12 +39,12 @@ const swaggerDefinition = {
 const options = {
     swaggerDefinition,
     // Paths to files containing OpenAPI definitions
-    apis: ['./routes/api/*.js'],
+    apis: ['./features/bookFeatures/bookRouters/book.js'],
   };
   
 const swaggerSpec = swaggerJSDoc(options);
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -53,6 +54,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/bookapi', bookRouter);
+app.use('/author', authRouter);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //IIFE
 (async () => {

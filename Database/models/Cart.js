@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const OrderSchema = new Schema({
+const CartSchema = new Schema({
     bookId: String,
     quantity: Number,
     price: Number,
 })
 
-const Cart = mongoose.model('Book', BookSchema);
-module.exports = Book;
+const Cart = mongoose.model('Cart', CartSchema);
+module.exports = Cart;
