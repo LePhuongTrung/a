@@ -56,7 +56,18 @@ const login = async (req, res, next) => {
   }
 };
 
+const deletedAccount = async (req, res) => {
+  try {
+      const user = await AuthService.deleteAccount(req.params.id);
+      res.send(user);
+  }
+  catch(error){
+      console.log("🚀 ~ file: Book.js ~ line 151 ~ router.delete ~ error", error);
+  }
+}
+
 module.exports = {
   register,
   login,
+  deletedAccount,
 };

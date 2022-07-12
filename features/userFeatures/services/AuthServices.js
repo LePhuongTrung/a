@@ -18,7 +18,17 @@ const findOne = async (data) => {
   }
 };
 
+const deleteAccount = async (id) => {
+  try {
+      const deleteAccount = await AuthRepository.deleteUser(id);
+      return deleteAccount;
+  } catch (error) {
+      console.log(error);
+  }
+};
+
 module.exports = { 
   create, 
   findOne,
+  deleteAccount,
 };

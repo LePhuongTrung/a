@@ -1,11 +1,12 @@
 var express = require("express");
 var router = express.Router();
-
-const { register, login } = require("../controller/authController");
+const authController = require('../controller/authController')
 
 /* GET home page. */
-router.post("/register", register);
+router.post("/register", authController.register);
 
-router.post("/login", login);
+router.post("/login", authController.login);
+
+router.delete("/deletedAccount/:id", authController.deletedAccount);
 
 module.exports = router;

@@ -19,7 +19,16 @@ const findOne = async (data) => {
   }
 };
 
+const deleteUser = async (id) =>{
+  try{
+      const deleteUser = await UserModel.findByIdAndDelete(id);
+      return deleteUser;
+  } catch(error){
+      console.log(error);
+  }
+}
 module.exports = { 
   create, 
-  findOne
+  findOne,
+  deleteUser,
 };
