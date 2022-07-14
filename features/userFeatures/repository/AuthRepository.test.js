@@ -26,7 +26,7 @@ describe("Sunny case: User testing", () => {
     expect(User.email).toBe(MOCK_USER_DATA.email);
   });
 
-  it("sign in is successful", async () => {
+  it("sign up is successful", async () => {
     const User = await AuthRepository.create(MOCK_USER_DATA);
     expect(User.email).toBe(MOCK_USER_DATA.email);
     console.log(User.id);

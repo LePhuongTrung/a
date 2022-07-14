@@ -1,12 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const bookController = require('../bookControllers/bookController')
-/**
- * @swagger
- * tags:
- *  name: Books
- *  description: API to manage your books.
- */
+const bookController = require('../controllers/bookController')
+
 /**
  * @swagger
  * /bookapi/books:
@@ -118,41 +113,87 @@ router.get('/oneBook/:id', bookController.getBook);
 /* POST create book. */
 /**
  * @swagger
- * /CreateBooks:
- *   get:
- *     summary: Create a new book.
+ * /bookapi/CreateBook:
+ *   post:
  *     tags: [Books]
- *     description: create new book.
+ *     summary: Create a new book
+ *     requestBody:
+ *      content:
+ *          application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                type: object
+ *                properties:
+ *                  title:
+ *                    type: string
+ *                  price:
+ *                    type: number
+ *                  author:
+ *                    type: string
+ *     responses:
+ *       201:
+ *         description: Created.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                type: object
+ *                properties:
+ *                  _id:
+ *                    type: string
+ *                  title:
+ *                    type: string
+ *                  price:
+ *                    type: number
+ *                  author:
+ *                    type: string
+ */
+router.post('/CreateBook', bookController.createBook);
+/* PUT update book. */
+/**
+ * @swagger
+ * /api/book/{bookId}:
+ *   put:
+ *     tags: [Books]
+ *     summary: Update a book
  *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: Numeric ID of the user to retrieve.
- *         schema:
- *           type: string
+ *      - in: path
+ *        name: bookId
+ *        required: true
+ *        schema:
+ *         type: string
+ *         description: string id of user to delete
+ *     requestBody:
+ *      content:
+ *          application/json:
+ *             schema:
+ *                type: object
+ *                properties:
+ *                  title:
+ *                    type: string
+ *                  price:
+ *                    type: number
+ *                  author:
+ *                    type: string
  *     responses:
  *       200:
- *         description: A single user.
+ *         description: Book that was update.
  *         content:
  *           application/json:
  *             schema:
  *               type: object
  *               properties:
- *                 data:
- *                   type: object
- *                   properties:
- *                      id:
- *                       type: string
- *                       description: The book's unique ID.
- *                      name:
- *                       type: string
- *                       description: The book's name.
- *                      price:
- *                       type: number
- *                       description: The book's price.
+ *                  _id:
+ *                    type: string
+ *                  title:
+ *                    type: string
+ *                  author:
+ *                    type: string
+ *                  price:
+ *                    type: number
  */
-router.post('/CreateBooks', bookController.createBook);
-/* PUT update book. */
 router.put('/updateBooks/:id',bookController.updateBook);
 
 /**
@@ -175,7 +216,6 @@ router.put('/updateBooks/:id',bookController.updateBook);
  */
 router.delete('/deleteBooks/:id', bookController.deletedBook); 
 
-router.get('/deleteBook/:id', bookController.deletedBook); 
 /* Search book. */
 router.get('/searchBook/:searchString/:skip', bookController.searchBook);
 

@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const database = require('./Database/connect');
 var indexRouter = require('./routes/index');
-var bookRouter = require('./features/bookFeatures/bookRouters/book');
+var bookRouter = require('./features/bookFeatures/routers/book');
 var authRouter = require('./features/userFeatures/routers/auth');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -38,7 +38,7 @@ const swaggerDefinition = {
 const options = {
     swaggerDefinition,
     // Paths to files containing OpenAPI definitions
-    apis: ['./features/bookFeatures/bookRouters/book.js'],
+    apis: ['./features/*/Routers/*.js'],
   };
   
 const swaggerSpec = swaggerJSDoc(options);

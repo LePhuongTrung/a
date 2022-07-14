@@ -3,6 +3,7 @@ const request = require("supertest");
 const app = require("../../../app");
 const DB = require("../../../Database/connect");
 const UserModel = require("../../../Database/models/User");
+const AuthServices = require("../services/AuthServices");
 
 const MOCK_USER_DATA = {
   email: "trunglp20015@gmail.com",
@@ -27,25 +28,17 @@ afterAll(() => {
 });
 
 describe("POST /users/register ", () => {
-  // chưa fix đc xóa sau khi tạo test
-  // test("return response status is 200", async () => {
-  //   const response = await request(app)
-  //     .post("/users/register")
-  //     .send(MOCK_USER_DATA_NO_DEL)
-  //     .set("Accept", "application/json");
+  test("return response status is 200", async () => {
+    const response = await request(app)
+      .post("/users/register")
+      .send(MOCK_USER_DATA_NO_DEL)
+      .set("Accept", "application/json");
 
-  //   expect(response.status).toBe(200);
-  //   expect(response.body.email).toEqual(MOCK_USER_DATA_NO_DEL.email);
-  //   const id = (await UserModel.findOne({email: MOCK_USER_DATA_NO_DEL.email}))._id;
-  //   console.log("🚀 ~ file: authController.test.js ~ line 39 ~ test ~ id", id)
-    
-  //   const deleteResponse = await request(app)
-  //   .delete("/users/deletedAccount/:id")
-  //   .send(id)
-  //   .set("Accept", "application/json");
-  //   const user = await UserModel.findOne({email: MOCK_USER_DATA_NO_DEL.email});
-  //   console.log("🚀 ~ file: authController.test.js ~ line 46 ~ test ~ user", user)
-  // });
+    expect(response.status).toBe(200);
+    expect(response.body.email).toEqual(MOCK_USER_DATA_NO_DEL.email);
+    const id = (await UserModel.findOne({email: MOCK_USER_DATA_NO_DEL.email}))._id;
+    const deleteUser = await AuthServices.deleteAccount(id);
+  });
   test("return response status is 400", async () => {
     const response = await request(app)
       .post("/users/register")
@@ -102,7 +95,7 @@ describe("POST /users/login ", () => {
         password: MOCK_USER_DATA.password,
       })
       .set("Accept", "application/json");
-
+    expect(response.cookies).toBe(MOCK_USER_DATA.access_200);
     expect(response.status).toBe(200);
     expect(response.text).toEqual("Login successfully !!!");
   });

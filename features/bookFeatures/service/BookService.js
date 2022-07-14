@@ -1,4 +1,4 @@
-const bookRepository = require('../bookRepository/BookRepository');
+const bookRepository = require('../repository/BookRepository');
 
 const getAllBooks = async () => {
     try {
