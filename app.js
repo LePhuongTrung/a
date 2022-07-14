@@ -3,11 +3,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const database = require('./Database/connect');
+
 var indexRouter = require('./routes/index');
 var bookRouter = require('./features/bookFeatures/routers/book');
 var authRouter = require('./features/userFeatures/routers/auth');
+
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+
+const { isLoggedIn } = require("./middlewares/authMiddleware");
 
 var app = express();
 
@@ -52,7 +56,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', authRouter);
-app.use('/bookapi', bookRouter);
+app.use('/bookapi', isLoggedIn, bookRouter);
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //IIFE
