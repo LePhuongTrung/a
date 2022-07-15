@@ -5,8 +5,8 @@ var logger = require('morgan');
 const database = require('./Database/connect');
 
 var indexRouter = require('./routes/index');
-var bookRouter = require('./features/bookFeatures/routers/book');
-var authRouter = require('./features/userFeatures/routers/auth');
+var bookRouter = require('./features/book/routers/book');
+var authRouter = require('./features/user/routers/auth');
 
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');

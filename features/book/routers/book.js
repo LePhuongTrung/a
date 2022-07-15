@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const bookController = require('../controllers/bookController')
+const bookController = require('../controllers/bookController');
+const permissions = require("../../../permissions/book");
 
 /**
  * @swagger
@@ -150,7 +151,7 @@ router.get('/oneBook/:id', bookController.getBook);
  *                  author:
  *                    type: string
  */
-router.post('/CreateBook', bookController.createBook);
+router.post('/CreateBook', permissions.canCreateBook, bookController.createBook);
 /* PUT update book. */
 /**
  * @swagger
@@ -194,7 +195,7 @@ router.post('/CreateBook', bookController.createBook);
  *                  price:
  *                    type: number
  */
-router.put('/updateBooks/:id',bookController.updateBook);
+router.put('/updateBooks/:id', permissions.canDeleteBook, bookController.updateBook);
 
 /**
  * @swagger

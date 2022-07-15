@@ -9,6 +9,7 @@ const BookSchema = new Schema({
     description: String,
     imageUrl: String,
     price: Number,
+    userId: String,
 })
 
 // create a model
